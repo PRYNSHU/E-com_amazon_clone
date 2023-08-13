@@ -1,5 +1,10 @@
-console.log('Hello-Guys'); //to print on terminal
+var http = require('http');
 
-//creating an API
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('hemlo world');
+  res.end();
+}).listen(8080);
+
 
 

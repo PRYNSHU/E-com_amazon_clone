@@ -19,6 +19,7 @@ enum Auth{
 class _AuthScreenState extends State<AuthScreen> {
 
   Auth _auth = Auth.signUp; //by default _auth is signUp
+
   final signupkey = GlobalKey<FormState>();
   final signinkey = GlobalKey<FormState>();
 
@@ -46,7 +47,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ? GlobalVariable.backgroundColor
                 : GlobalVariable.greyBackgroundCOlor,
 
-                title: Text('create account'),
+                title: const Text('Create Account'),
                 leading: Radio(
                   activeColor: GlobalVariable.secondaryColor,
                   value: Auth.signUp,
