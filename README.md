@@ -1,4 +1,4 @@
-# E-com_clone_project
+# E-com_flutter_project
 
 A new Flutter project.
 
