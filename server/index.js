@@ -2,16 +2,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+//IMPORT FROM OTHER FILES
+const authrouter = require("./routes/auth");
+
 const PORT = 5000;
+
 //creating an instance of express() fun , to use its features
 const app = express();
 const DB = "mongodb+srv://Priyanshu:priyanshu123@cluster0.rkupsqh.mongodb.net/?retryWrites=true&w=majority";
 
-//IMPORT FROM OTHER FILES
-const authrouter = require("./routes/auth");
 
 //MIDDLEWARE , method to mount router in main file
-app.use("/auth", authrouter);
+app.use(express.json());
+app.use("/auth", authrouter); //Mount the authrouter under the '/auth' path
 
 //connections
 mongoose.connect(DB).then(() => {
@@ -31,6 +34,9 @@ app.get("/", (req, res) => {
 });
 
 // Start the server and listen on the specified port
-app.listen(PORT, function () {
+app.listen(PORT, "0.0.0.0" , function () { 
     console.log("connected : " + PORT);
 });
+
+
+
