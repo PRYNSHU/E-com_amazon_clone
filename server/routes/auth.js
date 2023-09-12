@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require("../models/user"); //User contains schema for mongoose
 const bcryptjs = require('bcryptjs'); //to encrypt password
+const jwt = require('jsonwebtoken');
 const authrouter = express.Router();
 
 authrouter.post("/api/signup" ,async (req , res) => {
@@ -27,7 +28,6 @@ authrouter.post("/api/signup" ,async (req , res) => {
     res.json(user); //get the response
 
     } catch(e) {
-        
         res.status(500).json({error : e.message });
         console.log('not ohk nothing works properly');
     }
@@ -38,11 +38,29 @@ authrouter.post("/api/signup" ,async (req , res) => {
 authrouter.post('/api/signin' , async (req , res) => {
 
     try{
-
+        const {email , password } = req.body;
+        const user = User.findOne({email});
+ 
+        if(!user){
+            return res
+            .status(400)
+            .json({msg : "user does not exists" });
+        }
         
+        const isMatch = await bcryptjs.compare(password , user.hashpassword);
+        if(!isMatch){
+            return res
+            .status(400)
+            .json({msg : 'Incorrect password'});
+        }
+        return res.json({msg : 'worked here!'});
+        //everything is fine now
+        // const token = jwt.sign({id : user._id} , "passwordKey");
+        // res.json({token , ...user._doc});
 
     }catch(e) {
-
+        res.status(500).json({error : e.message});
+        console.log('sign in error not working bro');
     }
 });
 
