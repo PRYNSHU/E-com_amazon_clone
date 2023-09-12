@@ -4,7 +4,7 @@ class customTextField extends StatelessWidget {
 
   final TextEditingController controllers;
   final String hinttext;
-  const customTextField({super.key , required this.controllers, required this.hinttext});
+  const customTextField({super.key, required this.controllers, required this.hinttext});
 
   @override
   Widget build(BuildContext context) {

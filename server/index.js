@@ -17,11 +17,14 @@ app.use(express.json());
 app.use("/auth", authrouter); //Mount the authrouter under the '/auth' path
 
 //connections
-mongoose.connect(DB).then(() => {
-    console.log("connected successfully");
-}).catch((e) => {
-    console.log('sorry babu');
-});
+mongoose
+    .connect(DB)
+    .then(() => {
+        console.log("connected successfully");
+    })
+    .catch((e) => {
+        console.log('sorry babu');
+    });
 
 // a "route" refers to a mechanism used in web applications to define
 // how the application should respond to different HTTP requests
@@ -34,8 +37,8 @@ app.get("/", (req, res) => {
 });
 
 // Start the server and listen on the specified port
-app.listen(PORT, "0.0.0.0" , function () { 
-    console.log("connected : " + PORT);
+app.listen(PORT , () => {
+    console.log("connected at : " + PORT);
 });
 
 

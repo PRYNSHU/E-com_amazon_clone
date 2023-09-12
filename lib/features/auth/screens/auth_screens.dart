@@ -1,8 +1,15 @@
+import 'dart:math';
+
 import 'package:amazon_clone_project/common/widgets/custom_button.dart';
 import 'package:amazon_clone_project/common/widgets/input_textfield.dart';
 import 'package:amazon_clone_project/constants/global_variable.dart';
 import 'package:amazon_clone_project/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
+
+enum Auth {
+    signUp,
+    signIn
+}
 
 class AuthScreen extends StatefulWidget {
   static const String routename = '/auth-screen';
@@ -12,7 +19,6 @@ class AuthScreen extends StatefulWidget {
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
-enum Auth { signUp, signIn }
 
 class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signUp; //by default _auth is signUp
@@ -25,7 +31,12 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController namecontroller = TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
 
-  //dispose something...
+  void dispose(){
+    super.dispose();
+    emailcontroller.dispose();
+    namecontroller.dispose();
+    passwordcontroller.dispose();
+  }
 
   void signUpUser() {
     authservices.signUpUser(
@@ -42,7 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
       backgroundColor: GlobalVariable.greyBackgroundCOlor,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SafeArea(
+        child:  SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -51,17 +62,18 @@ class _AuthScreenState extends State<AuthScreen> {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
               ListTile(
-                tileColor: _auth == Auth.signUp
-                    ? GlobalVariable.backgroundColor
-                    : GlobalVariable.greyBackgroundCOlor,
+                tileColor: (_auth == Auth.signUp)
+                   ? GlobalVariable.backgroundColor
+                   : GlobalVariable.greyBackgroundCOlor,
+                
                 title: const Text('Create Account'),
                 leading: Radio(
                   activeColor: GlobalVariable.secondaryColor,
                   value: Auth.signUp,
                   groupValue: _auth,
-                  onChanged: (Auth) {
+                  onChanged: (Auth? val) {
                     setState(() {
-                      _auth = Auth!;
+                      _auth = val!;
                     });
                   },
                 ),
@@ -97,10 +109,12 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         customButton(
                           text: "signUp",
-                          onTap: () { 
+                          onTap: () {
                             if(signupkey.currentState!.validate()){
                               signUpUser();
                             }
+                            // signUpUser();
+                            print("its working ");
                           },
                         ),
                       ],
@@ -113,13 +127,14 @@ class _AuthScreenState extends State<AuthScreen> {
                   activeColor: GlobalVariable.secondaryColor,
                   value: Auth.signIn,
                   groupValue: _auth,
-                  onChanged: (Auth) {
+                  onChanged: (Auth? val) {
                     setState(() {
-                      _auth = Auth!;
+                      _auth = val!;
                     });
                   },
                 ),
               ),
+
               if (_auth == Auth.signIn)
                 Container(
                   color: GlobalVariable.backgroundColor,
@@ -144,7 +159,9 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         customButton(
                           text: "signIn",
-                          onTap: () {},
+                          onTap: () {
+                            print("sign in is also working");
+                          },
                         ),
                       ],
                     ),

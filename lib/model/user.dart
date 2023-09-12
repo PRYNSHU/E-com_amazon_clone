@@ -21,12 +21,13 @@ class User {
     required this.type, 
   });
 
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'name': name,
       'password': password,
-      'email' : email,
+      'email': email,
       'address': address,
       'token': token,
       'type': type,

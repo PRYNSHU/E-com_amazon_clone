@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Authservices {
+
   //sign up user
-  void signUpUser(
-  {
+  void signUpUser({
     required String name,
     required BuildContext context,
     required String email,
@@ -26,22 +26,23 @@ class Authservices {
         type: '',
       );
 
-      http.Response res =  await http.post(
+      http.Response res = await  http.post(
         Uri.parse('$uri/auth/api/signup'),
         body: user.toJson(),
         headers: <String ,String>{
-          'Content-Type' : 'application/json; chatset=UTF-8',
+          'Content-Type': 'application/json; chatset=UTF-8',
         },
       );
+      // print(res.body);
       
-      httpErrorHandle(response: res,
-       context: context,
-        onSuccess: (){
-          showSnakbar(context, 'Account Created! login with same credentials');
-      },
-      );
+      // httpErrorHandle(
+      //     response: res,
+      //     onSuccess: (){
+      //       showSnakbar(context, 'its working');
+      //     }
+      // );
     } catch (e) {
-      showSnakbar(context, e.toString());
+      showSnakbar(context, 'not working sorry');
     }
   }
 }
