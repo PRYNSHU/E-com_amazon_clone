@@ -1,8 +1,9 @@
-import 'dart:math';
+// import 'dart:math';
 
 import 'package:amazon_clone_project/common/widgets/custom_button.dart';
 import 'package:amazon_clone_project/common/widgets/input_textfield.dart';
 import 'package:amazon_clone_project/constants/global_variable.dart';
+import 'package:amazon_clone_project/constants/utils.dart';
 import 'package:amazon_clone_project/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,14 @@ class _AuthScreenState extends State<AuthScreen> {
   void signUpUser() {
     authservices.signUpUser(
       name: namecontroller.text,
+      context: context,
+      email: emailcontroller.text,
+      password: passwordcontroller.text,
+    );
+  }
+
+  void signInUser() {
+    authservices.signInUser(
       context: context,
       email: emailcontroller.text,
       password: passwordcontroller.text,
@@ -110,11 +119,11 @@ class _AuthScreenState extends State<AuthScreen> {
                         customButton(
                           text: "signUp",
                           onTap: () {
-                            if(signupkey.currentState!.validate()){
+                            if(signupkey.currentState!.validate())
+                            {
                               signUpUser();
+                              // showSnakbar(context, "SIGN-UP");
                             }
-                            // signUpUser();
-                            print("its working ");
                           },
                         ),
                       ],
@@ -138,9 +147,9 @@ class _AuthScreenState extends State<AuthScreen> {
               if (_auth == Auth.signIn)
                 Container(
                   color: GlobalVariable.backgroundColor,
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Form(
-                    key: signupkey,
+                    key: signinkey,
                     child: Column(
                       children: [
                         customTextField(
@@ -160,7 +169,10 @@ class _AuthScreenState extends State<AuthScreen> {
                         customButton(
                           text: "signIn",
                           onTap: () {
-                            print("sign in is also working");
+                            if(signinkey.currentState!.validate()){
+                              signInUser();
+                              // showSnakbar(context, "SIGN-IN");
+                            }
                           },
                         ),
                       ],

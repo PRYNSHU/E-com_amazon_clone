@@ -38,25 +38,25 @@ authrouter.post("/api/signup" ,async (req , res) => {
 authrouter.post('/api/signin' , async (req , res) => {
 
     try{
-        const {email , password } = req.body;
-        const user = User.findOne({email});
- 
+        const {email , password} = req.body;
+        const user = await User.findOne({email});
         if(!user){
             return res
             .status(400)
             .json({msg : "user does not exists" });
         }
         
-        const isMatch = await bcryptjs.compare(password , user.hashpassword);
+        const isMatch = await bcryptjs.compare(password , user.password);
         if(!isMatch){
             return res
             .status(400)
             .json({msg : 'Incorrect password'});
         }
-        return res.json({msg : 'worked here!'});
+
         //everything is fine now
-        // const token = jwt.sign({id : user._id} , "passwordKey");
-        // res.json({token , ...user._doc});
+        const token = jwt.sign({id : user._id} , "passwordKey");
+        res.json({token , ...user._doc});
+        console.log('auth.js is ohk');
 
     }catch(e) {
         res.status(500).json({error : e.message});
